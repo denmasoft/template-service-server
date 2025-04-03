@@ -2,6 +2,7 @@ from flask import Flask
 from app.config import Config
 from app.core.database import mongo
 from flask_cors import CORS
+from app.core.limiter import limiter
 
 
 def create_app():
@@ -9,6 +10,7 @@ def create_app():
 
     app.config.from_object(Config)
     mongo.init_app(app)
+    limiter.init_app(app)
 
     # Configure CORS
     origins = Config.CORS_ORIGINS.split(',') if isinstance(Config.CORS_ORIGINS,
