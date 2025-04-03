@@ -1,13 +1,13 @@
 from datetime import datetime
 from bson import ObjectId
+from app.core.base_model import BaseModel
 
-class Template:
+class Template(BaseModel):
     
     def __init__(self, title=None, description=None, created_at=None, id=None, created_by=None):
-        self.id = id if id else str(ObjectId())
+        super().__init__(id=id, created_at=created_at)
         self.title = title
         self.description = description
-        self.created_at = created_at if created_at else datetime.now()
         self.created_by = created_by
     
     @classmethod
@@ -26,7 +26,7 @@ class Template:
     def to_dict(self):
         return {
             "id": self.id,
-            "name": self.title,
+            "title": self.title,
             "description": self.description,
             "created_at": self.created_at,
             "created_by": self.created_by,

@@ -1,16 +1,16 @@
 from datetime import datetime
 from bson import ObjectId
+from app.core.base_model import BaseModel
 
-class User:
+class User(BaseModel):
     
     def __init__(self, google_id=None, name=None, email=None, picture=None, 
                  created_at=None, id=None):
-        self.id = id if id else str(ObjectId())
+        super().__init__(id=id, created_at=created_at)
         self.google_id = google_id
         self.name = name
         self.email = email
         self.picture = picture
-        self.created_at = created_at if created_at else datetime.now()
     
     @classmethod
     def from_dict(cls, data):
