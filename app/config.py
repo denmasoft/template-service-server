@@ -15,3 +15,12 @@ class Config:
     CORS_ALLOW_HEADERS = os.getenv('CORS_ALLOW_HEADERS', 'Content-Type,Authorization').split(',')
     CORS_EXPOSE_HEADERS = os.getenv('CORS_EXPOSE_HEADERS', 'Content-Type,Authorization').split(',')
     CORS_SUPPORTS_CREDENTIALS = os.getenv('CORS_SUPPORTS_CREDENTIALS', 'True').lower() == 'true'
+
+    # Rate limiting settings
+    RATELIMIT_DEFAULT = os.getenv('RATELIMIT_DEFAULT', "100 per day, 10 per hour")
+
+    if RATELIMIT_DEFAULT.startswith('"') and RATELIMIT_DEFAULT.endswith('"'):
+        RATELIMIT_DEFAULT = RATELIMIT_DEFAULT[1:-1]
+
+    RATELIMIT_STRATEGY = os.getenv('RATELIMIT_STRATEGY', "fixed-window")
+    RATELIMIT_STORAGE_URL = os.getenv('RATELIMIT_STORAGE_URL', "memory://")
