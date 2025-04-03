@@ -57,10 +57,13 @@ def create_template():
             description=data.get('description'),
             created_by=user.email
         )
-        
-        saved_template = template_service.persist(template)
-        
-        return ApiResponse.success(saved_template.to_dict())
+
+        try:
+            saved_template = template_service.persist(template)
+            return ApiResponse.success(saved_template.to_dict())
+        except ValueError as ve:
+            return ApiResponse.error(str(ve), 400)
+
     except Exception as e:
         return ApiResponse.error(str(e), 500)
 

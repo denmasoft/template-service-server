@@ -18,6 +18,10 @@ class TemplateRepository:
         templates = [Template.from_dict(template_data) for template_data in templates_data]
         
         return templates, total_count
+
+    def find_by_title(self, title):
+        template_data = self.entity_manager.find_one(self.collection_name, {"title": title})
+        return Template.from_dict(template_data)
         
     def persist(self, template):
         template_dict = template.to_dict()
