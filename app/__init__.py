@@ -4,6 +4,8 @@ from app.core.database import mongo
 from flask_cors import CORS
 from app.core.limiter import limiter
 from flask_jwt_extended import JWTManager
+from app.users.controllers import users_bp
+from app.templates.controllers import templates_bp
 
 def create_app():
     app = Flask(__name__)
@@ -23,7 +25,7 @@ def create_app():
          expose_headers=Config.CORS_EXPOSE_HEADERS,
          supports_credentials=Config.CORS_SUPPORTS_CREDENTIALS)
 
-    from app.users.controllers import users_bp
     app.register_blueprint(users_bp, url_prefix='/users')
+    app.register_blueprint(templates_bp, url_prefix='/templates')
 
     return app

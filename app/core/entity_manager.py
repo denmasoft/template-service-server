@@ -1,24 +1,24 @@
 from bson import ObjectId
-from app.core.database import Database
+from app.core.database import mongo
 import sys
 
 
 class EntityManager:
     def __init__(self):
-        self.db = Database.get_db()
+        pass
 
     def find_all(self, collection_name, query=None):
         if query is None:
             query = {}
         try:
-            return list(self.db[collection_name].find(query))
+            return list(mongo.db[collection_name].find(query))
         except Exception as e:
             print(f"Error in find_all: {str(e)}", file=sys.stderr)
             return []
 
     def find_one(self, collection_name, query):
         try:
-            result = self.db[collection_name].find_one(query)
+            result = mongo.db[collection_name].find_one(query)
             return result
         except Exception as e:
             print(f"Error in find_one: {str(e)}", file=sys.stderr)
@@ -26,7 +26,7 @@ class EntityManager:
 
     def find_by_id(self, collection_name, id):
         try:
-            result = self.db[collection_name].find_one({"_id": ObjectId(id)})
+            result = mongo.db[collection_name].find_one({"_id": ObjectId(id)})
             return result
         except Exception as e:
             print(f"Error finding by ID: {str(e)}", file=sys.stderr)
@@ -38,8 +38,8 @@ class EntityManager:
 
         try:
             skip = (page - 1) * limit
-            total_count = self.db[collection_name].count_documents(query)
-            results = list(self.db[collection_name].find(query).skip(skip).limit(limit))
+            total_count = mongo.db[collection_name].count_documents(query)
+            results = list(mongo.db[collection_name].find(query).skip(skip).limit(limit))
             return results, total_count
         except Exception as e:
             print(f"Error in find_paginated: {str(e)}", file=sys.stderr)
@@ -47,7 +47,7 @@ class EntityManager:
 
     def insert_one(self, collection_name, document):
         try:
-            result = self.db[collection_name].insert_one(document)
+            result = mongo.db[collection_name].insert_one(document)
             return result.inserted_id
         except Exception as e:
             print(f"Error in insert_one: {str(e)}", file=sys.stderr)

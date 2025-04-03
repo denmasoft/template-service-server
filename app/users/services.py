@@ -14,6 +14,9 @@ class UserService:
 
         return self.user_repository.find(page, limit)
 
+    def get_user_by_id(self, user_id):
+        return self.user_repository.find_by_id(user_id)
+
     def get_user_by_google_id(self, google_id):
         return self.user_repository.find_by_google_id(google_id)
 

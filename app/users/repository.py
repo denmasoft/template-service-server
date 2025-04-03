@@ -28,6 +28,13 @@ class UserRepository:
             return None
         return User.from_dict(user_data)
 
+    def find_by_id(self, user_id):
+        try:
+            user_data = self.entity_manager.find_by_id(self.collection_name, user_id)
+            return User.from_dict(user_data)
+        except:
+            return None
+
     def persist(self, user):
         user_dict = user.to_dict()
 
