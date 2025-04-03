@@ -20,7 +20,7 @@ class TemplateService:
         Validate that the template title is unique
         """
         if not template or not template.title:
-            return False, "Template name is required"
+            return False, "Template title is required"
 
         existing_template = self.get_by_title(template.title)
 
