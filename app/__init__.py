@@ -14,6 +14,7 @@ def create_app():
     jwt = JWTManager(app)
     limiter.init_app(app)
     mongo.init_app(app)
+    app.url_map.strict_slashes = False
 
     # Configure CORS
     origins = Config.CORS_ORIGINS.split(',') if isinstance(Config.CORS_ORIGINS,
